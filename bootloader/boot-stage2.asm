@@ -10,15 +10,6 @@ start:
 	mov ss, ax
 	mov sp, 0x9000
 
-	.enable_a20:
-		in al, 0x92
-		or al, 2
-		out 0x92, al
-
-	mov ah, 0x0E
-	mov al, 'X'
-	int 0x10
-
 	.load_kernel:
 
 		mov si, DAP 
@@ -27,6 +18,15 @@ start:
 		int 0x13
 
 	.enter_protected:
+		.enable_a20:
+			in al, 0x92
+			or al, 2
+			out 0x92, al
+
+		mov ah, 0x0E
+		mov al, 'X'
+		int 0x10
+
 		cli
 		lgdt [gdt_descriptor]
 
@@ -47,6 +47,8 @@ init_pm:
 	mov ss, ax
 	mov esp, 0x9000
 
+	mov eax, 0x0741        	
+	mov [0xB8000], ax
 
 	jmp $
 	jmp CODE_SEG:0x10000
