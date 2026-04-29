@@ -10,8 +10,11 @@ start:
 	mov ss, ax
 	mov sp, 0x9000
 
-	call enable_a20
-	
+	.enable_a20:
+		in al, 0x92
+		or al, 2
+		out 0x92, al
+
 	mov ah, 0x0E
 	mov al, 'X'
 	int 0x10
@@ -44,14 +47,12 @@ init_pm:
 	mov ss, ax
 	mov esp, 0x9000
 
-	mov [0xB8000], 0x0F580F58
 
 	jmp $
 	jmp CODE_SEG:0x10000
 	
 
 bootDriveNumber: db 0
-%include "a20.asm"
 
 align 16
 DAP:

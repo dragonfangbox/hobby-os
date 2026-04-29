@@ -82,14 +82,14 @@ enable_a20_keyboard_controller:
 	
 	call .wait_io2
 	in al, 0x60
-	push eax
+	push ax
 	
 	call .wait_io1
 	mov al, 0xd1
 	out 0x64, al
 	
 	call .wait_io1
-	pop eax
+	pop ax
 	or al, 2
 	out 0x60, al
 	
