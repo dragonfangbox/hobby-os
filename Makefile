@@ -38,8 +38,7 @@ image:
 	@dd if=kernel/build/kernel.bin of=os.img bs=$(SECTOR) conv=notrunc seek=5
 
 test:
-	qemu-system-i386 -drive file=os.img,format=raw -no-reboot --no-shutdown -d int,cpu_reset -serial stdio
-
+	qemu-system-i386 -drive file=os.img,format=raw -no-reboot --no-shutdown
 run:
 	make build
 	@echo running...
