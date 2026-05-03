@@ -3,16 +3,16 @@ SECTOR := 512
 .PHONY: assemble image test build run
 
 build:
-	@echo assembling bootloader...
-	make assemble 
 	@echo compiling kernel...
 	$(MAKE) -C kernel
+	@echo assembling bootloader...
+	make assemble 
 	@echo creating os image...
 	make image
 
 
 assemble:
-	$(eval KERNEL_SIZE := $(shell stat -c%s kernel.bin))
+	$(eval KERNEL_SIZE := $(shell stat -c%s kernel/build/kernel.bin))
 	$(eval KERNEL_SECTORS := $(shell echo $$(( ($(KERNEL_SIZE) + 511) / 512 ))))
 
 	@echo KERNEL_SIZE: $(KERNEL_SIZE)
@@ -35,10 +35,10 @@ image:
 
 	@dd if=boot-stage2.bin of=os.img bs=$(SECTOR) conv=notrunc seek=1
 
-	@dd if=kernel.bin of=os.img bs=$(SECTOR) conv=notrunc seek=5
+	@dd if=kernel/build/kernel.bin of=os.img bs=$(SECTOR) conv=notrunc seek=5
 
 test:
-	qemu-system-x86_64 -drive file=os.img,format=raw -no-reboot
+	qemu-system-i386 -drive file=os.img,format=raw -no-reboot --no-shutdown -d int,cpu_reset -serial stdio
 
 run:
 	make build

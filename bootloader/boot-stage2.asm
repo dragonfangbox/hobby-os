@@ -59,10 +59,9 @@ align 16
 DAP:
 	db 0x10
 	db 0x00
-blockcount:	dw KERNEL_SECTORS
+	dw KERNEL_SECTORS
 	dw 0
 	dw 0x1000
-	; 0x1000:0x0000
 	dq 5 ; which sector to start at
 
 %include "gdt.asm"

@@ -1,11 +1,6 @@
-; Make a second stage that loads from sector 1 -> 4
-; the second stage will then load the kernel THEN enter protected mode
-; pad the second stage so it takes up the whole space idk why
-; load the second stage at 0x8000 then jump to there
-;
-; KERNEL_SECTORS is defined as the size of the kernel in LBA sectors
-; the img file is in the format [ BOOT ][   EMPTY   ][    KERNEL     ]
-;						   1 sector ^   4 sector ^			 ^
+; KERNEL_SECTORS is defined at compile time as the size of the kernel in LBA sectors 
+; the img file is in the format [ BOOT ][ STAGE 2 ][    KERNEL     ]
+;						   1 sector ^  n sectors ^			 ^
 ;													  KERNEL_SECTORS sectors
 
 org 0x7C00
@@ -69,7 +64,7 @@ main:
 
 helloMsg: db "Hello from stage 1!", 0
 readErr: db "failed to read from disk... retrying...", 0
-extendErr: db "int 13h extended not supported", 0
+extendErr: db "int 13h extended not supported, your cooked", 0
 
 bootDriveNumber: db 0
 
