@@ -2,11 +2,10 @@ ENTRY(_start)
 
 SECTIONS
 {
-	. = 1M;
+	. = 0x10000;
 
 	.text BLOCK(4K) : ALIGN(4K)
 	{
-		KEEP*(.text._start)
 		*(.text)
 	}
 
