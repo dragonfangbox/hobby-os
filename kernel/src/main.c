@@ -1,8 +1,20 @@
-extern void kmain(void) {
-	
-	unsigned char* vgaBuffer = (unsigned char*)0xb8000;
+unsigned short* vgaBuffer = (unsigned short*)0xb8000;
 
-	*vgaBuffer = (unsigned char)'Z';
+#define WIDTH 80
+#define HEIGHT 25
+
+void VGA_clearScreen() {
+	for (int i = 0; i < WIDTH * HEIGHT; i++) {
+		vgaBuffer[i] = (unsigned short)(0 << 8) | 0x20;
+	}
+}
+
+void VGA_printChar(char c, unsigned char attrib, unsigned int x, unsigned int y) {
+	
+}
+
+extern void kmain(void) {
+	VGA_clearScreen();
 
 	while (1);
 
