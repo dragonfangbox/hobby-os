@@ -1,22 +1,12 @@
-unsigned short* vgaBuffer = (unsigned short*)0xb8000;
-
-#define WIDTH 80
-#define HEIGHT 25
-
-void VGA_clearScreen() {
-	for (int i = 0; i < WIDTH * HEIGHT; i++) {
-		vgaBuffer[i] = (unsigned short)(0 << 8) | 0x20;
-	}
-}
-
-void VGA_printChar(char c, unsigned char attrib, unsigned int x, unsigned int y) {
-	
-}
+#include "vga.h"
 
 extern void kmain(void) {
 	VGA_clearScreen();
 
-	while (1);
+	VGA_printChar('X', 0b00000101, 0, 0);
+	VGA_printChar('X', 0b00000101, 0, 1);
+	VGA_printChar('X', 0b00000101, 0, 2);
 
+	while(1) { __asm__ volatile ("hlt"); }
 	return;
 }
