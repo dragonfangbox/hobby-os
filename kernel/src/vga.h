@@ -3,5 +3,6 @@
 
 void VGA_clearScreen();
 void VGA_printChar(char c,unsigned char attrib, unsigned int x, unsigned int y);
+void VGA_printStr(const char* s, unsigned char attrib, unsigned int x, unsigned int y);
 
 #endif
