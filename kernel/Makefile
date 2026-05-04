@@ -1,10 +1,27 @@
-.PHONY: all 
+CFLAGS = -O2 -Wall -Wextra -ffreestanding -nostdlib -nostartfiles -m32
 
-all:
-	nasm  -f elf32 src/kernel_entry.asm -o build/kernel_entry.o
-	i686-elf-gcc -O2 -Wall -Wextra -ffreestanding -nostdlib -nostartfiles -m32 -c src/main.c -o build/main.o
+SRC_DIR = src
+BUILD_DIR = build
 
-	i686-elf-ld -m elf_i386 -T link.ld -o build/kernel.elf build/kernel_entry.o build/main.o
+SRCS := $(wildcard src/*.c)
+OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o, $(SRCS))
 
-	i686-elf-objcopy -O binary build/kernel.elf build/kernel.bin
+ASMOBJ = $(BUILD_DIR)/kernel_entry.o
+
+KERNEL_ELF = $(BUILD_DIR)/kernel.elf
+KERNEL_BIN = $(BUILD_DIR)/kernel.bin
+
+all: $(KERNEL_BIN)
+
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+	i686-elf-gcc $(CLFAGS) -Isrc -c $< -o $@
+
+$(ASMOBJ): $(SRC_DIR)/kernel_entry.asm
+	nasm -f elf32 $< -o $@
+
+$(KERNEL_ELF): $(ASMOBJ) $(OBJS)
+	i686-elf-ld -m elf_i386 -T link.ld -o $@ $^
+
+$(KERNEL_BIN): $(KERNEL_ELF)
+	i686-elf-objcopy -O binary $< $@
 
