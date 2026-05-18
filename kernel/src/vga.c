@@ -11,11 +11,11 @@ void VGA_clearScreen() {
 	}
 }
 
-void VGA_printChar(char c, unsigned char attrib, unsigned int x, unsigned int y) {
+void VGA_printChar(char c, byte attrib, u16 x, u16 y) {
 	vgaBuffer[y * WIDTH + x] = (attrib << 8) | c;
 }
 
-void VGA_printStr(const char* s, unsigned char attrib, unsigned int x, unsigned int y) {
+void VGA_printStr(const char* s, byte attrib, u16 x, u16 y) {
 	unsigned int count = 0;
 	while(s[count] != '\0') {
 		vgaBuffer[y * WIDTH + x + count] = (attrib << 8) | s[count];
