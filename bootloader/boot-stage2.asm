@@ -47,8 +47,8 @@ init_pm:
 	mov ss, ax
 	mov esp, 0x9000
 
-;	mov eax, 0x0741        	
-;	mov [0xB8000], ax
+	mov eax, 0x0741        	
+	mov [0xB8000], ax
 
 	jmp CODE_SEG:0x10000
 	
