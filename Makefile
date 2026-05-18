@@ -12,7 +12,7 @@ build:
 
 
 assemble:
-	$(eval KERNEL_SIZE := $(shell wc -c <  kernel/build/kernel.bin))
+	$(eval KERNEL_SIZE := $(shell wc -c <  kernel/build/kernel.bin | xargs))
 	$(eval KERNEL_SECTORS := $(shell echo $$(( ($(KERNEL_SIZE) + 511) / 512 ))))
 
 	@echo KERNEL_SIZE: $(KERNEL_SIZE)
@@ -25,7 +25,7 @@ assemble:
 	nasm -DKERNEL_SECTORS=$(KERNEL_SECTORS) bootloader/boot-stage2.asm -f bin -I bootloader -o boot-stage2.bin
 
 image:
-	$(eval KERNEL_SIZE := $(shell wc -c <  kernel/build/kernel.bin))
+	$(eval KERNEL_SIZE := $(shell wc -c <  kernel/build/kernel.bin | xargs))
 	$(eval KERNEL_SECTORS := $(shell echo $$(( ($(KERNEL_SIZE) + 511) / 512 ))))
 	$(eval TOTAL_SECTORS := $(shell echo $$(( 5 + $(KERNEL_SECTORS) ))))
 
