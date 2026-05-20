@@ -1,19 +1,20 @@
+include ../Makefile.variables
+
 CFLAGS = -O2 -Wall -Wextra -ffreestanding -nostdlib -nostartfiles -m32
 
 SRC_DIR = src
-BUILD_DIR = build
 
 SRCS := $(wildcard src/*.c)
-OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o, $(SRCS))
+OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILDDIR)/%.o, $(SRCS))
 
-ASMOBJ = $(BUILD_DIR)/kernel_entry.o
+ASMOBJ = $(BUILDDIR)/kernel_entry.o
 
-KERNEL_ELF = $(BUILD_DIR)/kernel.elf
-KERNEL_BIN = $(BUILD_DIR)/kernel.bin
+KERNEL_ELF = $(BUILDDIR)/kernel.elf
+KERNEL_BIN = $(BUILDDIR)/kernel.bin
 
 all: $(KERNEL_BIN)
 
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+$(BUILDDIR)/%.o: $(SRC_DIR)/%.c
 	i686-elf-gcc $(CLFAGS) -Isrc -c $< -o $@
 
 $(ASMOBJ): $(SRC_DIR)/kernel_entry.asm

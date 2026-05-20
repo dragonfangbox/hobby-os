@@ -1,0 +1,6 @@
+SECTOR := 512
+
+BUILDDIR = build/
+
+KERNELBUILD = kernel/build/
+BOOTLOADERBUILD = bootloader/build/
