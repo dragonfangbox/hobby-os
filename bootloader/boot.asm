@@ -38,8 +38,8 @@ main:
 		int 0x13
 		jc short .extended_error;
 
+	.retry:
 		; now load stage 2
-		.retry:
 		mov si, DAP 
 		mov ah, 0x42
 		mov dl, [bootDriveNumber]

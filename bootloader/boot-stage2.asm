@@ -23,19 +23,17 @@ start:
 			or al, 2
 			out 0x92, al
 
-		mov ah, 0x0E
-		mov al, 'X'
-		int 0x10
+		.enable_protected:
+			cli
+			lgdt [gdt_descriptor]
 
-		cli
-		lgdt [gdt_descriptor]
+			; enables protected mode
+			mov eax, cr0
+			or eax, 0x1
+			mov cr0, eax
 
-		; enables protected mode
-		mov eax, cr0
-		or eax, 0x1
-		mov cr0, eax
-
-		jmp CODE_SEG:protected_mode
+			; long jump to 32 bit code
+			jmp CODE_SEG:protected_mode
 
 bits 32
 protected_mode:
@@ -68,6 +66,7 @@ DAP:
 	dw 0x1000
 	dq 5 ; which sector to start at
 
-%include "gdt.asm"
+%include "gdt32.asm"
+
 ;pad to 2048 bytes (4 sectors)
 times (2048 - ($ - $$)) db 0
