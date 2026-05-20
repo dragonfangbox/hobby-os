@@ -1,6 +1,9 @@
 #ifndef VGA_H
 #define VGA_H
 
+#define VGAWIDTH 80
+#define VGAHEIGHT 25
+
 #include "types.h"
 
 void VGA_clearScreen();

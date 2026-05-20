@@ -35,10 +35,10 @@ start:
 		or eax, 0x1
 		mov cr0, eax
 
-		jmp CODE_SEG:init_pm
+		jmp CODE_SEG:protected_mode
 
 bits 32
-init_pm:
+protected_mode:
 	mov ax, DATA_SEG
 	mov ds, ax
 	mov es, ax
@@ -51,6 +51,10 @@ init_pm:
 	mov [0xB8000], ax
 
 	jmp CODE_SEG:0x10000
+
+	.init_long_mode:
+
+
 	
 
 bootDriveNumber: db 0
