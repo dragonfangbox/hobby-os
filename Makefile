@@ -3,7 +3,6 @@ include Makefile.variables
 .PHONY: image test build run
 
 run: build test
-	@echo running...
 
 build:
 	@echo compiling kernel...
@@ -27,4 +26,5 @@ image:
 	@dd if=$(KERNELBUILD)kernel.bin of=os.img bs=$(SECTOR) conv=notrunc seek=5
 
 test:
+	@echo running...
 	qemu-system-i386 -drive file=os.img,format=raw -no-reboot --no-shutdown
