@@ -25,7 +25,7 @@ start:
 
 		.enable_protected:
 			cli
-			lgdt [gdt_descriptor]
+			lgdt [gdt_32_descriptor]
 
 			; enables protected mode
 			mov eax, cr0
@@ -51,9 +51,10 @@ protected_mode:
 	jmp CODE_SEG:0x10000
 
 	.init_long_mode:
-
-
-	
+		; disable paging
+		mov eax, cr0
+		and eax, ~(1 << 31)
+		mov cr0, eax
 
 bootDriveNumber: db 0
 

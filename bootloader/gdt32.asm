@@ -1,7 +1,7 @@
-gdt_start:
+gdt_32_start:
     dq 0x0                  ; Null descriptor (required)
 
-gdt_code:
+gdt_32_code:
     dw 0xFFFF               ; Limit
     dw 0x0                  ; Base low
     db 0x0                  ; Base mid
@@ -9,7 +9,7 @@ gdt_code:
     db 11001111b            ; Granularity and flags
     db 0x0                  ; Base high
 
-gdt_data:
+gdt_32_data:
     dw 0xFFFF               ; Limit
     dw 0x0
     db 0x0
@@ -17,13 +17,13 @@ gdt_data:
     db 11001111b
     db 0x0
 
-gdt_end:
+gdt_32_end:
 
-gdt_descriptor:
-    dw gdt_end - gdt_start - 1 ; GDT size - 1
-    dd gdt_start               ; GDT base address
+gdt_32_descriptor:
+    dw gdt_32_end - gdt_32_start - 1 ; GDT size - 1
+    dd gdt_32_start               ; GDT base address
 
-CODE_SEG equ gdt_code - gdt_start
-DATA_SEG equ gdt_data - gdt_start
+CODE_SEG equ gdt_32_code - gdt_32_start
+DATA_SEG equ gdt_32_data - gdt_32_start
 
 	
