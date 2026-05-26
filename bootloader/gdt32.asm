@@ -23,7 +23,7 @@ gdt_32_descriptor:
     dw gdt_32_end - gdt_32_start - 1 ; GDT size - 1
     dd gdt_32_start               ; GDT base address
 
-CODE_SEG equ gdt_32_code - gdt_32_start
-DATA_SEG equ gdt_32_data - gdt_32_start
+CODE_SEG_32 equ gdt_32_code - gdt_32_start
+DATA_SEG_32 equ gdt_32_data - gdt_32_start
 
 	

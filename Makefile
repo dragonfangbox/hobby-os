@@ -27,4 +27,4 @@ image:
 
 test:
 	@echo running...
-	qemu-system-i386 -drive file=os.img,format=raw -no-reboot --no-shutdown
+	qemu-system-x86_64 -drive file=os.img,format=raw -no-reboot --no-shutdown -d int,cpu_reset
