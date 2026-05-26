@@ -21,7 +21,7 @@ gdt_64_end:
 
 gdt_64_descriptor:
     dw gdt_64_end - gdt_64_start - 1
-    dd gdt_64_start
+    dq gdt_64_start
 
 CODE_SEG_64 equ gdt_64_code - gdt_64_start
 DATA_SEG_64 equ gdt_64_data - gdt_64_start

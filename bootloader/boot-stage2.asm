@@ -104,7 +104,7 @@ protected_mode:
 
 		lgdt [gdt_64_descriptor]
 
-		jmp gdt_64_code:.long_mode
+		jmp CODE_SEG_64:.long_mode
 
 bits 64
 DEFAULT REL
