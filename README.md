@@ -9,6 +9,6 @@ A silly little OS I am making to learn more about computers and how they work on
 * x86_64-elf gcc
 * nasm
 
-### Compile
+### Compiling
 To compile the whole os, just run make. To run it in qemu, run make test.
 
