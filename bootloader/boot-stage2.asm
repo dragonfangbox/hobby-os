@@ -120,6 +120,8 @@ DEFAULT REL
 
 	mov [abs 0xB8000], 0x0741
 	
+	jmp 0x10000
+
 	jmp $
 
 bootDriveNumber: db 0
