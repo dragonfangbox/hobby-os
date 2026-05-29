@@ -1,6 +1,7 @@
 include ../Makefile.variables
 
-CFLAGS = -O2 -Wall -Wextra -ffreestanding -nostdlib -nostartfiles -m64
+CFLAGS = -O2 -Wall -Wextra -mcmodel=kernel -fno-exceptions -fno-unwind-tables \
+		 -fno-asynchronous-unwind-tables -ffreestanding -nostdlib -nostartfiles -m64 \
 
 SRC_DIR = src
 
@@ -15,7 +16,7 @@ KERNEL_BIN = $(BUILDDIR)/kernel.bin
 all: $(KERNEL_BIN)
 
 $(BUILDDIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(CLFAGS) -Isrc -c $< -o $@
+	$(CC) $(CFLAGS) -Isrc -c $< -o $@
 
 $(ASMOBJ): $(SRC_DIR)/kernel_entry.asm
 	nasm -f elf64 $< -o $@

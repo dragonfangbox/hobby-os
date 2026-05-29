@@ -1,48 +1,26 @@
 ENTRY(_start)
+
 SECTIONS
 {
-    . = 0x10000;
+	. = 0x10000;
+	
+	.text : ALIGN(4K) {
+		*(.text)
+	}
 
-    .text : AT(ADDR(.text) - 0x10000)
-    {
-        _code = .;
-        *(.text)
-        *(.rodata*)
-        . = ALIGN(4096);
-    }
+	.rodata : ALIGN(4K) {
+		*(.rodata)
+	}
 
-   .data : AT(ADDR(.data) - 0x10000)
-   {
-        _data = .;
-        *(.data)
-        . = ALIGN(4096);
-   }
+	.data : ALIGN(4K) {
+		*(.data)
+	}
 
-   .eh_frame : AT(ADDR(.eh_frame) - 0x10000)
-   {
-       _ehframe = .;
-       *(.eh_frame)
-        . = ALIGN(4096);
-   }
+	.bss : ALIGN(4K) {
+		*(.bss)
+		*(COMMON)
+	}
 
-   .bss : AT(ADDR(.bss) - 0x10000)
-   {
-       _bss = .;
-       *(.bss)
-
-       /*
-        * You usually need to include generated COMMON symbols
-        * under kernel BSS section or use gcc's -fno-common
-        */
-
-        *(COMMON)
-       . = ALIGN(4096);
-   }
-
-   _end = .;
-
-   /DISCARD/ :
-   {
-        *(.comment)
-   }
+    kernel_start = ADDR(.text);
+    kernel_end = .;
 }

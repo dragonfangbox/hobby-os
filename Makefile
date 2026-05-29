@@ -1,8 +1,5 @@
 include Makefile.variables
 
-KERNELBUILD = kernel/build/
-BOOTLOADERBUILD = bootloader/build/
-
 .PHONY: image test build run
 
 run: build test
@@ -31,3 +28,10 @@ image:
 test:
 	@echo running...
 	qemu-system-x86_64 -drive file=os.img,format=raw -no-reboot --no-shutdown -d int,cpu_reset
+
+clean:
+	rm -r $(BOOTLOADERBUILD)
+	mkdir $(BOOTLOADERBUILD)
+
+	rm -r $(KERNELBUILD)
+	mkdir $(KERNELBUILD)

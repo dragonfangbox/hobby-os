@@ -1,20 +1,20 @@
-bits 64
-
 global _start
 extern kmain
 
 section .text
+bits 64
 _start:
 	cli
 
-	mov eax, 0x0745        	
-	mov [0xB8000], ax
+	mov word [abs 0xB8000], 0x0741
 
-	mov esp, stack_top
+	mov rsp, stack_top
 	call kmain
 
 	jmp $
 
-.bss:
-resb 16386
+section .bss
+align 16
+stack_bottom:
+    resb 16384
 stack_top:

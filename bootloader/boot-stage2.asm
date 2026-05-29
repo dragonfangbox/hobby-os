@@ -118,11 +118,9 @@ DEFAULT REL
 	mov gs, ax
 	mov ss, ax
 
-	mov [abs 0xB8000], 0x0741
+	mov word [abs 0xB8000], 0x0746
 	
 	jmp 0x10000
-
-	jmp $
 
 bootDriveNumber: db 0
 
