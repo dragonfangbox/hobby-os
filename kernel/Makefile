@@ -1,29 +1,43 @@
 include ../Makefile.variables
 
-CFLAGS = -O2 -Wall -Wextra -mcmodel=kernel -fno-exceptions -fno-unwind-tables \
-		 -fno-asynchronous-unwind-tables -ffreestanding -nostdlib -nostartfiles -m64 \
+CFLAGS = -O0 -g -Wall -Wextra -mcmodel=kernel -fno-exceptions -fno-unwind-tables \
+		 -fno-asynchronous-unwind-tables -ffreestanding -nostdlib -nostartfiles -m64 
+
+ASFLAGS = -f elf64
 
 SRC_DIR = src
 
 SRCS := $(wildcard src/*.c)
 OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILDDIR)/%.o, $(SRCS))
 
-ASMOBJ = $(BUILDDIR)/kernel_entry.o
+ASMSRCS := $(wildcard src/*.s)
+ASMOBJS := $(patsubst $(SRC_DIR)/%.s,$(BUILDDIR)/%.o, $(ASMSRCS))
 
 KERNEL_ELF = $(BUILDDIR)/kernel.elf
 KERNEL_BIN = $(BUILDDIR)/kernel.bin
 
 all: $(KERNEL_BIN)
 
-$(BUILDDIR)/%.o: $(SRC_DIR)/%.c
+$(BUILDDIR)/%.o: $(SRC_DIR)/%.c | $(BUILDDIR)
 	$(CC) $(CFLAGS) -Isrc -c $< -o $@
 
-$(ASMOBJ): $(SRC_DIR)/kernel_entry.asm
-	nasm -f elf64 $< -o $@
+$(BUILDDIR)/%.o: $(SRC_DIR)/%.s | $(BUILDDIR)
+	nasm $(ASFLAGS) $< -o $@
 
-$(KERNEL_ELF): $(ASMOBJ) $(OBJS)
+$(KERNEL_ELF): $(ASMOBJS) $(OBJS)
 	$(LD) -m elf_x86_64 -T link.ld -o $@ $^
 
 $(KERNEL_BIN): $(KERNEL_ELF)
 	$(OBJCPY) -O binary $< $@
 
+clean:
+	rm -r build
+	
+$(BUILDDIR):
+	mkdir -p $@
+
+print:
+	@echo SRCS=$(SRCS)
+	@echo OBJS=$(OBJS)
+	@echo ASMSRCS=$(ASMSRCS)
+	@echo ASMOBJS=$(ASMOBJS)

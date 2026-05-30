@@ -3,6 +3,6 @@
 
 #include "types.h"
 
-void TERMINAL_putChar(char c, byte attrib);
+void TERMINAL_putChar(char c, uint8_t attrib);
 
 #endif

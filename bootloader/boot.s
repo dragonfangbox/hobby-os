@@ -60,7 +60,7 @@ main:
 	call print_string
 	jmp $
 	
-%include "util-inl.asm"
+%include "util-inl.s"
 
 helloMsg: db "Hello from stage 1!", 0
 readErr: db "failed to read from disk... retrying...", 0

@@ -33,10 +33,10 @@ start:
 			mov cr0, eax
 
 			; long jump to 32 bit code
-			jmp CODE_SEG_32:protected_mode
+			jmp CODE_SEG_32:.protected_mode
 
 bits 32
-protected_mode:
+.protected_mode:
 	mov ax, DATA_SEG_32
 	mov ds, ax
 	mov es, ax
@@ -108,7 +108,6 @@ protected_mode:
 
 bits 64
 DEFAULT REL
-
 .long_mode:
 	cli
 	mov ax, DATA_SEG_64 
@@ -120,7 +119,8 @@ DEFAULT REL
 
 	mov word [abs 0xB8000], 0x0746
 	
-	jmp 0x10000
+	mov rax, 0x10000
+	jmp rax
 
 bootDriveNumber: db 0
 
@@ -133,8 +133,8 @@ DAP:
 	dw 0x1000
 	dq 5 ; which sector to start at
 
-%include "gdt32.asm"
-%include "gdt64.asm"
+%include "gdt32.s"
+%include "gdt64.s"
 
 PML4T_ADDR equ 0x1000
 PDPT_ADDR equ 0x2000
@@ -152,5 +152,6 @@ CR0_PG_ENABLE equ 1 << 31
 
 EFER_MSR equ 0xC0000080
 EFER_LM_ENABLE equ 1 << 8
+
 ;pad to 2048 bytes (4 sectors)
 times (2048 - ($ - $$)) db 0

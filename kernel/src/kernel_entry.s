@@ -1,7 +1,7 @@
 global _start
 extern kmain
 
-section .text
+section .text.start
 bits 64
 _start:
 	cli

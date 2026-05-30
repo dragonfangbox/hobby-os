@@ -7,7 +7,7 @@
 #include "types.h"
 
 void VGA_clearScreen();
-void VGA_printChar(char c, byte attrib, u16 x, u16 y);
-void VGA_printStr(const char* s, byte attrib, u16 x, u16 y);
+void VGA_printChar(char c, uint8_t attrib, uint16_t x, uint16_t y);
+void VGA_printStr(const char* s, uint8_t attrib, uint16_t x, uint16_t y);
 
 #endif

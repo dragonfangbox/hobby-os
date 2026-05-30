@@ -1,6 +1,8 @@
 include Makefile.variables
 
-.PHONY: image test build run
+.PHONY: image test build run rebuild
+
+rebuild: clean build test
 
 run: build test
 
@@ -31,7 +33,6 @@ test:
 
 clean:
 	rm -r $(BOOTLOADERBUILD)
-	mkdir $(BOOTLOADERBUILD)
+	mkdir -p $(BOOTLOADERBUILD)
 
-	rm -r $(KERNELBUILD)
-	mkdir $(KERNELBUILD)
+	$(MAKE) -C kernel clean
