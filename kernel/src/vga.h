@@ -9,5 +9,6 @@
 void VGA_clearScreen();
 void VGA_printChar(char c, uint8_t attrib, uint16_t x, uint16_t y);
 void VGA_printStr(const char* s, uint8_t attrib, uint16_t x, uint16_t y);
+void VGA_printNum64(uint64_t num, uint8_t attrib, uint16_t x, uint16_t y);
 
 #endif

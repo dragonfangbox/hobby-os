@@ -17,6 +17,10 @@
 #include "types.h"
 
 #define GDT_SIZE 6
+#define GDT_KERNEL_CODE_SEG 0x08
+#define GDT_KERNEL_DATA_SEG 0x10
+#define GDT_USER_CODE_SEG 0x18
+#define GDT_USER_DATA_SEG 0x20
 
 typedef struct  {
 	uint16_t limit_low;
@@ -31,8 +35,11 @@ typedef struct  {
 } __attribute__((packed)) gdt_entry_t;
 
 typedef struct  {
+} __attribute__((packed)) gdt_tss_t;
+
+typedef struct  {
     uint16_t limit;
-    uint64_t base;   // 64-bit in long mode
+    uint64_t base;
 } __attribute__((packed)) gdtr_t;
 
 void GDT_init();

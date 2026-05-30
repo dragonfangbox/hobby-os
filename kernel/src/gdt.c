@@ -10,6 +10,9 @@ void GDT_init() {
 	// null descriptor
 	gdt[0] = (gdt_entry_t){0};
 
+	// true == code seg
+	// false == data seg
+	
 	GDT_fillEntry(1, 0, true);
 	GDT_fillEntry(2, 0, false);
 	GDT_fillEntry(3, 3, true);
@@ -18,8 +21,6 @@ void GDT_init() {
 	gdtr.limit = sizeof(gdt) - 1;
 	gdtr.base = (uint64_t)gdt;
 
-	TERMINAL_putChar('U', 0b10101010);
-
 	__asm__ volatile(
 		"lgdt %0"
 		:
@@ -27,9 +28,7 @@ void GDT_init() {
 		: "memory"
 	);
 
-	TERMINAL_putChar('G', 0b10101010);
-
-//	gdt_reload_segments();
+	gdt_reload_segments();
 
 }
 
@@ -46,5 +45,5 @@ void GDT_fillEntry(uint8_t entry, uint8_t privilege, bool executable) {
 }
 
 void GDT_fillEntryTSS() {
-
+	
 }
