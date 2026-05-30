@@ -7,6 +7,7 @@ A silly little OS I am making to learn more about computers and how they work on
 * make
 * qemu
 * x86_64-elf ld
+* x86_64-elf objcopy
 * x86_64-elf gcc
 * nasm
 
