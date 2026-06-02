@@ -4,7 +4,7 @@
 [x] IDT (interrupt descriptor table)\
 [x] a better GDT while im messing with tables\
 [ ] registers struct\
-[ ] learn what remapping a pic is.\
+[ ] configure and set up apic and I/O apic
 [ ] timer irq\
 [ ] keyboard irq\
 [ ] tss gdt entry\
