@@ -4,13 +4,14 @@
 
 #include "gdt.h"
 #include "idt.h"
+#include "apic.h"
 
 extern void kmain(void) {
 	VGA_clearScreen();
-	VGA_printStr("hullo", 0b11101011, 0, 0);
 
 	GDT_init();
 	IDT_init();
+	x2apic_is_supported();
 
 	VGA_printStr("hullo2", 0b11101011, 0, 0);
 

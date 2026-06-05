@@ -1,0 +1,19 @@
+#ifndef CPUID_H
+#define CPUID_H
+
+#include "types.h"
+
+#define bit_APIC (1 << 9)
+#define bit_X2APIC (1 << 21)
+
+static inline void cpuid_count(uint32_t leaf, uint32_t subleaf,
+						uint32_t* eax, uint32_t* ebx,
+						uint32_t* ecx, uint32_t* edx) {
+	__asm__ volatile (
+		"cpuid"
+		: "=a"(*eax), "=b"(*ebx), "=c"(*ecx), "=d"(*edx)
+		: "a"(leaf), "c"(subleaf)
+	);
+}
+
+#endif
