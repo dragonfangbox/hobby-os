@@ -3,6 +3,7 @@
 
 #include "types.h"
 
-bool x2apic_is_supported();
+void apic_init();
+
 
 #endif

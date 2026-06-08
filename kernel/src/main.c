@@ -11,9 +11,12 @@ extern void kmain(void) {
 
 	GDT_init();
 	IDT_init();
-	x2apic_is_supported();
+	apic_init();
 
-	VGA_printStr("hullo2", 0b11101011, 0, 0);
+
+	VGA_printNum64(12345678, 0b11101011, 0, 0);
+
+//	VGA_printStr("hullo2", 0b11101011, 0, 0);
 
 	while(1) { __asm__ volatile ("hlt"); }
 	return;

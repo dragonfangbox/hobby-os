@@ -34,7 +34,8 @@ void VGA_printNum64(uint64_t num, uint8_t attrib, uint16_t x, uint16_t y) {
 	}
 
 	for (int32_t j = i - 1; j >= 0; j--) {
-		VGA_printChar(buf[j], attrib, x - j, y);
+		// x + i - 1 - j makes it so it prints just like printstr
+		VGA_printChar(buf[j], attrib, (x + i - 1) - j, y);
 	}
 
 }
