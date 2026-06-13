@@ -6,14 +6,25 @@
 static idt_entry_t idt[IDT_SIZE];
 static idtr_t idtr;
 
+#define PAGE_FAULT_VEC 14
+
 extern void* isr_stub_table[];
 
-extern void exception_handler(uint64_t err_num);
-void exception_handler(uint64_t err_num) {
-
+extern void exception_handler(uint64_t vector);
+void exception_handler(uint64_t vector) {
 	VGA_clearScreen();
 	VGA_printStr("EXCEPTION OCCURED", 0b10110101, (VGAWIDTH / 2) - 12, (VGAHEIGHT / 2) - 1);
-	VGA_printNum64(err_num, 0b10110101, (VGAWIDTH / 2), (VGAHEIGHT / 2));
+	VGA_printNum64(vector, 0b10110101, (VGAWIDTH / 2), (VGAHEIGHT / 2));
+
+	switch(vector) {
+		case PAGE_FAULT_VEC:
+			VGA_printStr("PAGE FAULT OCCURED", 0b10110101, (VGAWIDTH / 2) - 12, (VGAHEIGHT / 2) - 2);
+			break;
+		default:
+			break;
+
+	}
+
 
 	__asm__ volatile("cli; hlt");
 }
