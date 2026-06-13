@@ -5,5 +5,4 @@
 
 void apic_init();
 
-
 #endif
