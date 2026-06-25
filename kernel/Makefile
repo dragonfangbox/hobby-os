@@ -3,35 +3,45 @@ include ../Makefile.variables
 CFLAGS = -O0 -g -Wall -Wextra -mcmodel=kernel -fno-exceptions -fno-unwind-tables \
 		 -fno-asynchronous-unwind-tables -ffreestanding -nostdlib -nostartfiles -m64 
 
+CFLAGS += -Iinclude/
+
 ASFLAGS = -f elf64
 
-SRC_DIR = src
+SRCDIR = src/
 
-SRCS := $(wildcard src/*.c)
-OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILDDIR)/%.o, $(SRCS))
+KERNEL_ELF := build/kernel.elf
+KERNEL_BIN := build/kernel.bin
 
-ASMSRCS := $(wildcard src/*.s)
-ASMOBJS := $(patsubst $(SRC_DIR)/%.s,$(BUILDDIR)/%.o, $(ASMSRCS))
+SRCS := 
+include src/kernel/Makefile
+include src/drivers/Makefile
+include src/arch/x86_64/Makefile
+include src/mem/Makefile
 
-KERNEL_ELF = $(BUILDDIR)/kernel.elf
-KERNEL_BIN = $(BUILDDIR)/kernel.bin
+OBJS := $(SRCS:src/%.c=build/%.o)
+OBJS := $(OBJS:src/%.s=build/%.o)
+
+$(info SRCS = $(SRCS))
+$(info OBJS = $(OBJS))
 
 all: $(KERNEL_BIN)
 
-$(BUILDDIR)/%.o: $(SRC_DIR)/%.c | $(BUILDDIR)
-	$(CC) $(CFLAGS) -Isrc -c $< -o $@
+$(BUILDDIR)%.o: $(SRCDIR)/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-$(BUILDDIR)/%.o: $(SRC_DIR)/%.s | $(BUILDDIR)
+$(BUILDDIR)%.o: $(SRCDIR)/%.s 	
+	@mkdir -p $(dir $@)
 	nasm $(ASFLAGS) $< -o $@
 
-$(KERNEL_ELF): $(ASMOBJS) $(OBJS)
+$(KERNEL_ELF): $(OBJS)
 	$(LD) -m elf_x86_64 -T link.ld -o $@ $^
 
 $(KERNEL_BIN): $(KERNEL_ELF)
 	$(OBJCPY) -O binary $< $@
 
 clean:
-	rm -r build
+	rm -rf build
 	
 $(BUILDDIR):
 	mkdir -p $@

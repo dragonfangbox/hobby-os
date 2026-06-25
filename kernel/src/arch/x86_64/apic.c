@@ -3,6 +3,7 @@
 
 #include "apic.h"
 
+#include "types.h"
 #include "cpuid.h"
 #include "asm.h"
 #include "vga.h"
