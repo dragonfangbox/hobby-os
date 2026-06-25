@@ -18,7 +18,7 @@ void exception_handler(uint64_t vector) {
 
 	switch(vector) {
 		case PAGE_FAULT_VEC:
-			VGA_printStr("PAGE FAULT OCCURED", 0b10110101, (VGAWIDTH / 2) - 12, (VGAHEIGHT / 2) - 2);
+			VGA_printStr("PAGE FAULT OCCURED", 0b10110101, (VGAWIDTH / 2) - 12, (VGAHEIGHT / 2));
 			break;
 		default:
 			break;

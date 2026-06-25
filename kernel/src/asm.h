@@ -5,7 +5,7 @@
 
 static inline void outb(uint16_t port, uint8_t val)
 {
-    __asm__ volatile ( "outb %b0, %w1" : : "a"(val), "Nd"(port) : "memory");
+    asm volatile ( "outb %b0, %w1" : : "a"(val), "Nd"(port) : "memory");
 }
 
 
@@ -29,6 +29,10 @@ static inline uint64_t rdmsr(uint64_t msr)
         : "c"(msr)
     );
 	return ((uint64_t)high << 32) | low;
+}
+
+static inline void load_cr3(void* cr3_val) {
+	asm volatile ("mov %0 cr3" :: "r"((uint64_t) cr3_val) : "memory");
 }
 
 #endif

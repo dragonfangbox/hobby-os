@@ -4,6 +4,12 @@
 #define VGAWIDTH 80
 #define VGAHEIGHT 25
 
+#define VGA_BLACK_FG (0000 << 4)
+#define VGA_WHITE_FG (1111 << 4) 
+
+#define VGA_BLACK_BG (0000)
+#define VGA_WHITE_BG (1111) 
+
 #include "types.h"
 
 void VGA_clearScreen();
