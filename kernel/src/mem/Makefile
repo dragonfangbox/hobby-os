@@ -1,4 +1,5 @@
 MEM_SRCS := \
-paging.c \
+pmm.c \
+vmm.c \
 
 SRCS += $(addprefix src/mem/, $(MEM_SRCS))

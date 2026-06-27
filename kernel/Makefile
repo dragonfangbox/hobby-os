@@ -14,6 +14,7 @@ KERNEL_BIN := build/kernel.bin
 
 SRCS := 
 include src/kernel/Makefile
+include src/kernel/util/Makefile
 include src/drivers/Makefile
 include src/arch/x86_64/Makefile
 include src/mem/Makefile

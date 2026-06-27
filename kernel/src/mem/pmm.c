@@ -1,13 +1,9 @@
-#include "paging.h"
+#include "pmm.h"
 
-#define INVALID_PAGE UINT64_MAX
-
-#define PAGE_PRESENT (1 << 0)
-#define PAGE_WRITE (1 << 1)
-#define PAGE_USER (1 << 2) // user or supervisor
+#include "types.h"
 
 // about 16mb of memory
-#define BITMAP_SIZE 8
+#define BITMAP_SIZE 64
 
 static uint64_t bitmap[BITMAP_SIZE] = {0};
 
@@ -35,7 +31,7 @@ void pmm_init() {
 	set_page(0); // lets us use 0 as an error code
 }
 
-void* pmm_alloc_page() {
+uint64_t pmm_alloc_page() {
 	uint64_t page = find_free_page();
 	if (page == 0) {
 		return 0;
@@ -43,7 +39,7 @@ void* pmm_alloc_page() {
 
 	set_page(page);
 
-	return (void*)(page * PAGE_SIZE);
+	return (page * PAGE_SIZE);
 }
 
 void pmm_free_page(void* page) {
