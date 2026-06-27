@@ -17,16 +17,17 @@ void exception_handler(uint64_t vector) {
 	VGA_printNum64(vector, 0b10110101, (VGAWIDTH / 2), (VGAHEIGHT / 2));
 
 	switch(vector) {
-		case PAGE_FAULT_VEC:
+		case PAGE_FAULT_VEC: {
 			VGA_printStr("PAGE FAULT OCCURED", 0b10110101, (VGAWIDTH / 2) - 12, (VGAHEIGHT / 2));
 			break;
-		default:
+		}	
+		default: {
+			VGA_printStr("UNKNOWN EXCEPTION OCCURED (NOT HANDLED IN EXCEPTION HANDLER)", 0b10110101, (VGAWIDTH / 2) - 12, (VGAHEIGHT / 2));
 			break;
-
+		}
 	}
 
-
-	__asm__ volatile("cli; hlt");
+	asm volatile("cli; hlt");
 }
 
 void IDT_init(void) {

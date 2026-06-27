@@ -29,7 +29,7 @@ image:
 
 test:
 	@echo running...
-	qemu-system-x86_64 -drive file=os.img,format=raw -no-reboot --no-shutdown -d int,cpu_reset
+	qemu-system-x86_64 -drive file=os.img,format=raw -no-reboot -no-shutdown -d int,cpu_reset
 
 clean:
 	rm -r $(BOOTLOADERBUILD)
